@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>meituan</string>
+	<key>category</key>
+	<string>Internet</string>
+	<key>connections</key>
+	<dict>
+		<key>6FDB7C05-1F08-4A23-97A5-255C7C829374</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>BCE81F57-5D9C-4FDC-9CE9-32BF46627618</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Jiessie</string>
+	<key>description</key>
+	<string>meituan search</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>meituan</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>plusspaces</key>
+				<false/>
+				<key>url</key>
+				<string>{query}</string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>BCE81F57-5D9C-4FDC-9CE9-32BF46627618</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>124</integer>
+				<key>keyword</key>
+				<string>mt</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>请输入查询词</string>
+				<key>script</key>
+				<string># -*- coding: utf-8 -*-
+
+import StringIO, gzip, alfred, urllib, urllib2, datetime, re,sys
+try:
+    import xml.etree.cElementTree as ET
+except ImportError:
+    import xml.etree.ElementTree as ET
+
+reload(sys) 
+sys.setdefaultencoding('UTF-8')
+originQuery = '{query}'
+#originQuery = '合利屋'
+#print originQuery
+#theQuery = u'%E5%90%88%E5%88%A9%E5%B1%8B'
+theQuery = urllib.quote_plus(originQuery)
+#url = 'http://dict-co.iciba.com/api/dictionary.php?key=F8B564ADA8E6D4FCB81ACFF2B0BC5478&amp;w=%s' % theQuery
+url = 'http://www.meituan.com/s/?w=%s&amp;mtt=1.index%%2Fchangecity.0.0.i9xsufr8' % theQuery
+#print url
+request = urllib2.Request(url)
+request.add_header('Accept-encoding', 'gzip')
+req_open = urllib2.build_opener()
+conn = req_open.open(request)
+req_data = conn.read()
+
+data_stream = StringIO.StringIO(req_data)
+gzip_stream = gzip.GzipFile(fileobj=data_stream)
+actual_data = gzip_stream.read()
+
+#p = re.compile(r'.*?\[(?P&lt;source&gt;.*?)\] to \[(?P&lt;dst&gt;.*?)\] .*')
+p = re.compile(r'\&lt;h3 class=\"deal-tile__title\"\&gt;.*?\&lt;\/h3\&gt;.*?\&lt;p class=\"deal-tile__detail\"\&gt;.*?\&lt;\/p\&gt;',re.S)
+title_re = re.compile(r'.*?\&lt;a href=\"(?P&lt;url&gt;.*?)\".*?title=\"(?P&lt;title&gt;.*?)\".*',re.S)
+#dict = ET.fromstring(actual_data)
+#poses = dict.findall('pos')
+#acceptations = dict.findall('acceptation')
+items = p.findall(actual_data)
+#print items
+results = []
+
+if len(items) &gt; 0 :
+	index = 0
+	for item in items:
+		m = title_re.match(item)
+                title = m.group('title')
+		url = m.group('url')
+                subtitle = 'test'
+		aitem = alfred.Item({'uid': index, 'arg' : url}, title, subtitle)
+		results.append(aitem)
+		index += 1
+else :
+	aitem = alfred.Item({'uid': 1, 'arg' : "http://www.meituan.com/"}, 'Not Found', '')
+	results.append(aitem)
+
+xml = alfred.xml(results)
+alfred.write(xml)
+</string>
+				<key>title</key>
+				<string>美团</string>
+				<key>type</key>
+				<integer>3</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>6FDB7C05-1F08-4A23-97A5-255C7C829374</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>6FDB7C05-1F08-4A23-97A5-255C7C829374</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>BCE81F57-5D9C-4FDC-9CE9-32BF46627618</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
