@@ -8,7 +8,7 @@
 	<string>Productivity</string>
 	<key>connections</key>
 	<dict>
-		<key>E90C7531-019D-4297-A1C2-826CD60053DF</key>
+		<key>1D4A27CB-14DA-4E83-B277-C737CEB8DD62</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
@@ -33,61 +33,35 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>anchorfields</key>
-				<true/>
-				<key>daterange</key>
-				<integer>0</integer>
-				<key>fields</key>
-				<array>
-					<dict>
-						<key>field</key>
-						<string>kMDItemDisplayName</string>
-						<key>not</key>
-						<false/>
-						<key>split</key>
-						<true/>
-						<key>value</key>
-						<string>{query}</string>
-						<key>words</key>
-						<true/>
-					</dict>
-					<dict>
-						<key>field</key>
-						<string>kMDItemFinderComment</string>
-						<key>not</key>
-						<false/>
-						<key>split</key>
-						<true/>
-						<key>value</key>
-						<string>{query}</string>
-						<key>words</key>
-						<true/>
-					</dict>
-				</array>
-				<key>includesystem</key>
-				<false/>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
 				<key>keyword</key>
 				<string>idea</string>
-				<key>scopes</key>
-				<array>
-					<string>/Volumes/WorkSpace/git-workspace</string>
-					<string>/Volumes/WorkSpace/sohu-workspace</string>
-				</array>
-				<key>subtext</key>
-				<string>Search idea folders and open it with IDEA</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Please Waiting</string>
+				<key>script</key>
+				<string>python IDEA.py {query}</string>
 				<key>title</key>
-				<string>open idea with IDEA</string>
-				<key>types</key>
-				<array>
-					<string>public.folder</string>
-				</array>
+				<string>Search IDEA project and Open</string>
+				<key>type</key>
+				<integer>0</integer>
 				<key>withspace</key>
 				<true/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.input.filefilter</string>
+			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>E90C7531-019D-4297-A1C2-826CD60053DF</string>
+			<string>1D4A27CB-14DA-4E83-B277-C737CEB8DD62</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -115,41 +89,6 @@ open -a "$IDEA" {query}</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>keyword</key>
-				<string>iml</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<true/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Please Waiting</string>
-				<key>script</key>
-				<string>query="{query}"</string>
-				<key>title</key>
-				<string>Search IDEA project and Open</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>1D4A27CB-14DA-4E83-B277-C737CEB8DD62</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
@@ -158,14 +97,9 @@ open -a "$IDEA" {query}</string>
 		<key>1D4A27CB-14DA-4E83-B277-C737CEB8DD62</key>
 		<dict>
 			<key>ypos</key>
-			<real>180</real>
-		</dict>
-		<key>1E3B75D4-B41D-444F-A962-5A0B11FE0792</key>
-		<dict>
-			<key>ypos</key>
 			<real>60</real>
 		</dict>
-		<key>E90C7531-019D-4297-A1C2-826CD60053DF</key>
+		<key>1E3B75D4-B41D-444F-A962-5A0B11FE0792</key>
 		<dict>
 			<key>ypos</key>
 			<real>60</real>
