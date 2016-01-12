@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string></string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict/>
+	<key>createdby</key>
+	<string>Jie</string>
+	<key>description</key>
+	<string>search propbank for verb</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>propbank</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>keyword</key>
+				<string>pb</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>script</key>
+				<string># -*- coding: utf-8 -*-
+
+import StringIO, gzip, alfred, urllib, urllib2, datetime, re,sys
+try:
+    import xml.etree.cElementTree as ET
+except ImportError:
+    import xml.etree.ElementTree as ET
+
+reload(sys) 
+sys.setdefaultencoding('UTF-8')
+originQuery = '{query}'
+theQuery = urllib.quote_plus(originQuery)
+url = 'https://verbs.colorado.edu/propbank/framesets-english/'
+request = urllib2.Request(url)
+request.add_header('Accept-encoding', 'gzip')
+req_open = urllib2.build_opener()
+conn = req_open.open(request)
+req_data = conn.read()
+
+data_stream = StringIO.StringIO(req_data)
+gzip_stream = gzip.GzipFile(fileobj=data_stream)
+actual_data = gzip_stream.read()
+
+p = re.compile(r'&lt;li&gt;&lt;a href="Somali-j.html"&gt; Somali-j.html&lt;/a&gt;&lt;/li&gt;
+',re.S)
+title_re = re.compile(r'.*?\&lt;a href=\"(?P&lt;url&gt;.*?)\".*?title=\"(?P&lt;title&gt;.*?)\".*',re.S)
+items = p.findall(actual_data)
+results = []
+
+if len(items) &gt; 0 :
+	index = 0
+	for item in items:
+		m = title_re.match(item)
+                title = m.group('title')
+		url = m.group('url')
+                subtitle = 'test'
+		aitem = alfred.Item({'uid': index, 'arg' : url}, title, subtitle)
+		results.append(aitem)
+		index += 1
+else :
+	aitem = alfred.Item({'uid': 1, 'arg' : "http://www.meituan.com/"}, 'Not Found', '')
+	results.append(aitem)
+
+xml = alfred.xml(results)
+alfred.write(xml)
+</string>
+				<key>subtext</key>
+				<string>Input the verb</string>
+				<key>title</key>
+				<string>Propbank</string>
+				<key>type</key>
+				<integer>3</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>3EF4D6AF-FD38-4E61-BF7F-9C695C9E5742</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>3EF4D6AF-FD38-4E61-BF7F-9C695C9E5742</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>jiessie.github.io</string>
+</dict>
+</plist>
