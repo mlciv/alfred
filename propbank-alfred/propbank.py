@@ -31,7 +31,7 @@ if originQuery == "" or actual_data == '':
     f.write(actual_data)
     f.close()
 
-p = re.compile(r'\<a href=\"%s-.*?\.html\"\> %s-.*?\.html\<\/a\>' % (originQuery,originQuery) ,re.S)
+p = re.compile(r'\<a href=\"%s.*?\.html\"\> %s.*?\.html\<\/a\>' % (originQuery,originQuery) ,re.S)
 title_re = re.compile(r'.*?\<a href=\"(?P<html>.*?.html).*',re.S)
 items = p.findall(actual_data)
 results = []
