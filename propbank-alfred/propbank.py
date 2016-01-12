@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import StringIO, gzip, alfred, urllib, urllib2, datetime, re,sys
+import StringIO, gzip, alfred, urllib, urllib2, datetime, re,sys, os
 try:
     import xml.etree.cElementTree as ET
 except ImportError:
@@ -9,16 +9,27 @@ except ImportError:
 reload(sys) 
 sys.setdefaultencoding('UTF-8')
 originQuery = '{query}'
-#originQuery = 'ability'
-theQuery = urllib.quote_plus(originQuery)
-url = 'https://verbs.colorado.edu/propbank/framesets-english/'
-request = urllib2.Request(url)
-req_open = urllib2.build_opener()
-conn = req_open.open(request)
-req_data = conn.read()
+actual_data = ''
+if os.path.exists("index.html"):
+   f = open("index.html",'r')
+   actual_data =  f.read()
+   f.close()
 
-data_stream = StringIO.StringIO(req_data)
-actual_data = data_stream.read()
+#originQuery = 'ability'
+url = 'https://verbs.colorado.edu/propbank/framesets-english/'
+if originQuery == "" or actual_data == '':
+    if os.path.exists('index.html') :
+        os.remove("index.html")
+    theQuery = urllib.quote_plus(originQuery)
+    request = urllib2.Request(url)
+    req_open = urllib2.build_opener()
+    conn = req_open.open(request)
+    req_data = conn.read()
+    data_stream = StringIO.StringIO(req_data)
+    actual_data = data_stream.read()
+    f = open("index.html",'w')
+    f.write(actual_data)
+    f.close()
 
 p = re.compile(r'\<a href=\"%s-.*?\.html\"\> %s-.*?\.html\<\/a\>' % (originQuery,originQuery) ,re.S)
 title_re = re.compile(r'.*?\<a href=\"(?P<html>.*?.html).*',re.S)

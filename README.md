@@ -3,8 +3,12 @@
 ##mt-alfred
 search meituan by keyword
 
+Usage: Default keyword -- mt
+
 ##IDEA-alfred
 search IDEA project in User Defined Workspace and open it with IDEA
+
+Usage: Default keyword -- idea
 
 ##RotateDisplay-alfred
 Invoke a apple script to set the "Display" option.
@@ -16,6 +20,8 @@ Pay attention to two things:
    screen is "screen List"
 2. Button 2 or Button 1, the id may differ in different system, test the script
    and debug the button number please.
+
+Usage: Default keyword -- rotate
    
    
 ##Propbank-alfred 
@@ -29,4 +35,10 @@ In this index.html page, the following regex pattern can extract the propbank ht
 p = re.compile(r'\<a href=\"%s-.*?\.html\"\> %s-.*?\.html\<\/a\>' % (originQuery,originQuery) ,re.S)
 title_re = re.compile(r'.*?\<a href=\"(?P<html>.*?.html).*',re.S)
 ```
+cached the 500k+ "index.html" to improve the performance.
+
+Usage: Default keyword -- pb eat 
+
+Just type "pb" to update the index.html when you found you cannot find the verb
+here.
 
