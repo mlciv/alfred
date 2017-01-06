@@ -6,7 +6,7 @@ try:
 except ImportError:
     import xml.etree.ElementTree as ET
 
-reload(sys) 
+reload(sys)
 sys.setdefaultencoding('UTF-8')
 originQuery = '{query}'
 actual_data = ''
@@ -16,7 +16,7 @@ if os.path.exists("index.html"):
    f.close()
 
 #originQuery = 'ability'
-url = 'https://verbs.colorado.edu/propbank/framesets-english/'
+url = 'https://verbs.colorado.edu/propbank/framesets-english-aliases/'
 if originQuery == "" or actual_data == '':
     if os.path.exists('index.html') :
         os.remove("index.html")
